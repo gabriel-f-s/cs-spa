@@ -1,0 +1,91 @@
+<div class="flex min-h-screen w-full bg-white text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
+
+  <div class="flex flex-1 flex-col justify-between p-8 sm:p-16 md:p-24 lg:p-32">
+
+    <header class="flex justify-start">
+      <div class="flex items-center gap-1">
+        <div class="flex h-10 w-10 items-center justify-center rounded-xl text-slate-600">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+          </svg>
+        </div>
+        <span class="font-heading text-xl font-bold tracking-tight text-slate-900 dark:text-white">Controle Smart</span>
+      </div>
+    </header>
+
+    <main class="my-auto mx-auto w-full max-w-md py-12">
+      <router-outlet></router-outlet>
+    </main>
+
+    <footer class="text-xs text-slate-400 dark:text-slate-500 font-body">
+      <p>&copy; 2026 Controle Smart. Todos os direitos reservados.</p>
+    </footer>
+  </div>
+
+  <div class="hidden lg:flex lg:flex-1 relative flex-col items-center justify-center bg-slate-950 p-12 overflow-hidden border-l border-slate-900">
+
+    <div class="absolute -left-20 -top-20 h-[30rem] w-[30rem] rounded-full bg-gray-700 opacity-20 blur-[120px] pointer-events-none"></div>
+    <div class="absolute -bottom-20 -right-20 h-[30rem] w-[30rem] rounded-full bg-slate-600 opacity-20 blur-[120px] pointer-events-none"></div>
+
+    <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+    <div class="relative z-10 w-full max-w-lg">
+
+      <div class="text-center mb-10 px-4">
+        <h2 class="font-heading text-3xl font-bold text-white tracking-tight mb-3">
+          Seu controle de serviços e projetos em um só lugar.
+        </h2>
+        <p class="font-body text-sm text-slate-400 max-w-md mx-auto leading-relaxed">
+          Conecte suas vendas, relacionamento com clientes e gestão operacional em um único ecossistema fluido.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 p-2">
+
+        <div class="bg-slate-900/50 backdrop-blur-md shadow-2xl border border-slate-800/60 p-5 rounded-2xl transform transition-all duration-300 hover:-translate-y-1 hover:border-slate-700">
+          <div class="h-10 w-10 bg-blue-500/10 border border-blue-500/20 rounded-xl flex items-center justify-center mb-3 text-blue-400">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+              <path fill-rule="evenodd" d="M7.5 5.25a3 3 0 0 1 3-3h3a3 3 0 0 1 3 3v.205c.933.085 1.857.197 2.774.334 1.454.218 2.476 1.483 2.476 2.917v3.033c0 1.211-.734 2.352-1.936 2.752A24.726 24.726 0 0 1 12 15.75c-2.73 0-5.357-.442-7.814-1.259-1.202-.4-1.936-1.541-1.936-2.752V8.706c0-1.434 1.022-2.7 2.476-2.917A48.814 48.814 0 0 1 7.5 5.455V5.25Zm7.5 0v.09a49.488 49.488 0 0 0-6 0v-.09a1.5 1.5 0 0 1 1.5-1.5h3a1.5 1.5 0 0 1 1.5 1.5Zm-3 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+              <path d="M3 18.4v-2.796a4.3 4.3 0 0 0 .713.31A26.226 26.226 0 0 0 12 17.25c2.892 0 5.68-.468 8.287-1.335.252-.084.49-.189.713-.311V18.4c0 1.452-1.047 2.728-2.523 2.923-2.12.282-4.282.427-6.477.427a49.19 49.19 0 0 1-6.477-.427C4.047 21.128 3 19.852 3 18.4Z" />
+            </svg>
+          </div>
+          <h3 class="font-heading font-semibold text-white text-sm">Gestão de Projetos</h3>
+          <p class="font-body text-xs text-slate-400 mt-1 leading-normal">Acompanhe entregas, serviços e prazos com clareza.</p>
+        </div>
+
+        <div class="bg-slate-900/50 backdrop-blur-md shadow-2xl border border-slate-800/60 p-5 rounded-2xl transform transition-all duration-300 hover:-translate-y-1 hover:border-slate-700">
+          <div class="h-10 w-10 bg-indigo-500/10 border border-indigo-500/20 rounded-xl flex items-center justify-center mb-3 text-indigo-400">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+              <path d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0ZM1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM17.25 19.128l-.001.144a2.25 2.25 0 0 1-.233.96 10.088 10.088 0 0 0 5.06-1.01.75.75 0 0 0 .42-.643 4.875 4.875 0 0 0-6.957-4.611 8.586 8.586 0 0 1 1.71 5.157v.003Z" />
+            </svg>
+          </div>
+          <h3 class="font-heading font-semibold text-white text-sm">CRM Integrado</h3>
+          <p class="font-body text-xs text-slate-400 mt-1 leading-normal">Mantenha suas negociações e clientes sempre no radar.</p>
+        </div>
+
+        <div class="bg-slate-900/50 backdrop-blur-md shadow-2xl border border-slate-800/60 p-5 rounded-2xl transform transition-all duration-300 hover:-translate-y-1 hover:border-slate-700">
+          <div class="h-10 w-10 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-center justify-center mb-3 text-emerald-400">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+              <path d="M5.223 2.25c-.497 0-.974.198-1.325.55l-1.3 1.298A3.75 3.75 0 0 0 7.5 9.75c.627.47 1.406.75 2.25.75.844 0 1.624-.28 2.25-.75.626.47 1.406.75 2.25.75.844 0 1.623-.28 2.25-.75a3.75 3.75 0 0 0 4.902-5.652l-1.3-1.299a1.875 1.875 0 0 0-1.325-.549H5.223Z" />
+              <path fill-rule="evenodd" d="M3 20.25v-8.755c1.42.674 3.08.673 4.5 0A5.234 5.234 0 0 0 9.75 12c.804 0 1.568-.182 2.25-.506a5.234 5.234 0 0 0 2.25.506c.804 0 1.567-.182 2.25-.506 1.42.674 3.08.675 4.5.001v8.755h.75a.75.75 0 0 1 0 1.5H2.25a.75.75 0 0 1 0-1.5H3Zm3-6a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-.75.75h-3a.75.75 0 0 1-.75-.75v-3Zm8.25-.75a.75.75 0 0 0-.75.75v5.25c0 .414.336.75.75.75h3a.75.75 0 0 0 .75-.75v-5.25a.75.75 0 0 0-.75-.75h-3Z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <h3 class="font-heading font-semibold text-white text-sm">Frente de Caixa</h3>
+          <p class="font-body text-xs text-slate-400 mt-1 leading-normal">Vendas ágeis no PDV com baixa automática de estoque.</p>
+        </div>
+
+        <div class="bg-slate-900/50 backdrop-blur-md shadow-2xl border border-slate-800/60 p-5 rounded-2xl transform transition-all duration-300 hover:-translate-y-1 hover:border-slate-700">
+          <div class="h-10 w-10 bg-violet-500/10 border border-violet-500/20 rounded-xl flex items-center justify-center mb-3 text-violet-400">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+              <path fill-rule="evenodd" d="M2.25 13.5a8.25 8.25 0 0 1 8.25-8.25.75.75 0 0 1 .75.75v6.75H18a.75.75 0 0 1 .75.75 8.25 8.25 0 0 1-16.5 0Z" clip-rule="evenodd" />
+              <path fill-rule="evenodd" d="M12.75 3a.75.75 0 0 1 .75-.75 8.25 8.25 0 0 1 8.25 8.25.75.75 0 0 1-.75.75h-7.5a.75.75 0 0 1-.75-.75V3Z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <h3 class="font-heading font-semibold text-white text-sm">Visão 360º</h3>
+          <p class="font-body text-xs text-slate-400 mt-1 leading-normal">Métricas e resultados do seu negócio em tempo real.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
