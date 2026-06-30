@@ -1,0 +1,68 @@
+<div class="animate-in fade-in slide-in-from-bottom-4 duration-700">
+  <div class="mb-8 text-left">
+    <h1 class="font-heading text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+      Verificação em duas etapas
+    </h1>
+    <p class="font-body mt-2 text-slate-500 dark:text-slate-400">
+      Insira o código de 6 dígitos gerado pelo seu aplicativo autenticador para continuar.
+    </p>
+  </div>
+
+  <form [formGroup]="mfaForm" (ngSubmit)="verifyCode()" class="space-y-6">
+
+    <div class="space-y-1">
+      <tui-textfield tuiTextfieldSize="l">
+        <label tuiLabel>Código de segurança</label>
+        <input
+          tuiInput
+          type="text"
+          inputmode="numeric"
+          maxlength="6"
+          formControlName="code"
+          placeholder="000000"
+          class="font-mono tracking-widest text-lg"
+          autocomplete="one-time-code"
+        />
+      </tui-textfield>
+
+      <tui-error
+        [error]="mfaForm.get('code')?.touched && mfaForm.get('code')?.invalid ? 'O código deve conter exatamente 6 números.' : null"
+      ></tui-error>
+    </div>
+
+    <button
+      tuiButton
+      type="submit"
+      size="l"
+      class="w-full font-heading shadow-lg shadow-blue-600/20"
+      appearance="primary"
+      [loading]="isVerifying()"
+    >
+      Validar acesso
+    </button>
+  </form>
+
+  <p class="font-body mt-8 text-center text-sm text-slate-500 dark:text-slate-400 flex flex-col items-center gap-2">
+    <span>Perdeu o acesso ao seu dispositivo?</span>
+    <a
+      tuiLink
+      [routerLink]="['/auth/recovery']"
+      class="font-medium text-slate-900 hover:text-blue-600 dark:text-white dark:hover:text-blue-400"
+    >
+      Contate o suporte
+    </a>
+
+    <span class="text-slate-300 dark:text-slate-700 w-8 border-t border-slate-200 dark:border-slate-800 my-2"></span>
+
+    <a
+      tuiLink
+      (click)="cancelLogin()"
+      class="font-medium text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white cursor-pointer flex items-center gap-1"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
+        <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd" />
+      </svg>
+      Voltar para o login
+    </a>
+  </p>
+</div>
