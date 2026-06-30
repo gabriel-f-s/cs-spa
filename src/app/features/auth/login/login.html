@@ -1,0 +1,87 @@
+<div class="animate-in fade-in slide-in-from-bottom-4 duration-700">
+  <div class="mb-8 text-left">
+    <h1 class="font-heading text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+      Bem-vindo de volta
+    </h1>
+    <p class="font-body mt-2 text-slate-500 dark:text-slate-400">
+      Entre com suas credenciais para acessar sua plataforma.
+    </p>
+  </div>
+
+  <form [formGroup]="loginForm" (ngSubmit)="submit()" class="space-y-5">
+
+    <div class="space-y-1">
+      <tui-textfield tuiTextfieldSize="l" class="font-body">
+        <label tuiLabel>E-mail profissional</label>
+        <input
+          tuiInput
+          type="email"
+          formControlName="email"
+          placeholder="exemplo@empresa.com"
+        />
+      </tui-textfield>
+
+      <tui-error
+        [error]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid ? 'Informe um e-mail válido.' : null"
+      ></tui-error>
+    </div>
+
+    <div class="space-y-1">
+      <tui-textfield tuiTextfieldSize="l" class="font-body">
+        <label tuiLabel>Sua senha</label>
+        <input
+          tuiInput
+          type="password"
+          formControlName="password"
+          placeholder="••••••••"
+        />
+      </tui-textfield>
+
+      <tui-error
+        [error]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid ? 'A senha deve ter no mínimo 6 caracteres.' : null"
+      ></tui-error>
+    </div>
+
+    <div class="flex items-center justify-between py-1">
+      <label class="font-body text-sm text-slate-600 dark:text-slate-400 flex gap-2 items-center cursor-pointer">
+        <input
+          tuiCheckbox
+          type="checkbox"
+          formControlName="remember"
+          size="s"
+        />
+        <span>Lembrar de mim</span>
+      </label>
+
+      <a
+        tuiLink
+        [routerLink]="['/auth/recovery']"
+        class="font-body text-sm font-medium text-slate-600 hover:text-blue-500 dark:text-blue-400"
+      >
+        Esqueceu a senha?
+      </a>
+    </div>
+
+    <button
+      tuiButton
+      type="submit"
+      size="l"
+      class="w-full font-heading shadow-lg shadow-blue-600/20"
+      appearance="primary"
+      [loading]="isLoading"
+    >
+      Acessar plataforma
+    </button>
+  </form>
+
+  <p class="font-body mt-8 text-center text-sm text-slate-500 dark:text-slate-400">
+    Ainda não tem uma conta?
+    <a
+      tuiLink
+      [routerLink]="['/auth/register']"
+      class="font-medium text-slate-900 hover:text-blue-600 dark:text-white dark:hover:text-blue-400"
+    >
+      Solicite um acesso
+    </a>
+  </p>
+</div>
