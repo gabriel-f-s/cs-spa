@@ -1,3 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
-
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Outfit:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 @import 'tailwindcss';
+
+@variant dark (&:where([tuitheme="dark"], [tuitheme="dark"] *));
+
+.mono {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading, button, th, div  {
+  font-family: "Outfit", sans-serif;
+}
+
+p, a, span, .font-body, td, tr {
+  font-family: "DM Sans", sans-serif;
+}
