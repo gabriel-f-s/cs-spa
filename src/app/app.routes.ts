@@ -18,18 +18,12 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('./features/user/user.routes').then((m) => m.userRoutes),
-      },
-      {
-        path: 'users',
-        loadChildren: () =>
-          import('./features/identity/identity.routes').then((m) => m.identityRoutes),
-        data: { breadcrumb: 'Usuários' },
+        loadChildren: () => import('./features/tenant/tenant.routes').then((m) => m.tenantRoutes),
       },
       {
         path: 'profile',
         loadChildren: () =>
-          import('./features/profile/profile.routes').then((m) => m.profileRoutes),
+          import('./features/shared/profile/profile.routes').then((m) => m.profileRoutes),
         data: { breadcrumb: 'Minha Conta' },
       },
     ],
@@ -46,12 +40,7 @@ export const routes: Routes = [
       {
         path: 'profile',
         loadChildren: () =>
-          import('./features/profile/profile.routes').then((m) => m.profileRoutes),
-      },
-      {
-        path: 'tenants',
-        loadChildren: () =>
-          import('./features/tenancy/tenancy.routes').then((m) => m.tenancyRoutes),
+          import('./features/shared/profile/profile.routes').then((m) => m.profileRoutes),
       },
     ],
   },
