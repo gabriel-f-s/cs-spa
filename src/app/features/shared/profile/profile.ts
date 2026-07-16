@@ -1,6 +1,6 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../core/services/auth/auth.service';
+import { AuthService } from '../../../core/services/auth/auth.service';
 import {
   TuiButton,
   TuiNotificationService,
@@ -11,14 +11,14 @@ import {
   tuiLoaderOptionsProvider,
 } from '@taiga-ui/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { TuiButtonLoading } from '@taiga-ui/kit';
-import { ProfileService } from '../../core/services/profile/profile.service';
+import { TuiButtonLoading, TuiInputPhone } from '@taiga-ui/kit';
+import { ProfileService } from '../../../core/services/profile/profile.service';
 import {
   ChangeEmailRequest,
   ProfileResponse,
   UpdateProfileRequest,
-} from '../../core/models/profile.model';
-import { RoleBadge } from '../../core/components/role-badge/role-badge';
+} from '../../../core/models/profile.model';
+import { RoleBadge } from '../../../core/components/role-badge/role-badge';
 
 @Component({
   selector: 'app-profile',
@@ -33,6 +33,7 @@ import { RoleBadge } from '../../core/components/role-badge/role-badge';
     DatePipe,
     TuiLoader,
     RoleBadge,
+    TuiInputPhone,
   ],
   templateUrl: './profile.html',
   styleUrl: './profile.css',

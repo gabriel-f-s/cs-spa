@@ -27,7 +27,7 @@
             <div class="space-y-1">
               <tui-textfield tuiTextfieldSize="l">
                 <label tuiLabel>Telefone / WhatsApp</label>
-                <input tuiInput type="tel" formControlName="phoneNumber"/>
+                <input tuiInputPhone mask="+55 (##) #####-####" type="tel" formControlName="phoneNumber"/>
               </tui-textfield>
             </div>
           </div>
@@ -39,6 +39,7 @@
             type="submit"
             appearance="primary"
             size="m"
+            class="bg-brand-primary"
             [loading]="isPersonalLoading"
             [disabled]="personalForm.pristine || personalForm.invalid"
           >

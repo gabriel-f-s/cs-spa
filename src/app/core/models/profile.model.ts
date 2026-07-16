@@ -10,7 +10,6 @@ export interface ProfileResponse {
   email: string;
   phoneNumber: string;
   role: string;
-  mfaEnabled: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
