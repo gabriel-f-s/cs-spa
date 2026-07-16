@@ -1,0 +1,142 @@
+<div class="max-w-4xl mx-auto space-y-6 pb-12">
+
+  <tui-loader [loading]="loading()">
+    @if (user(); as u) {
+
+      <div class="flex items-center justify-between mb-8">
+        <button
+          tuiButton
+          appearance="flat"
+          size="s"
+          iconStart="@tui.arrow-left"
+          routerLink="/users"
+          class="text-slate-500 hover:text-brand-primary"
+        >
+          Voltar
+        </button>
+
+        @if (!isEditing() && canEditUser()) {
+          <button tuiButton size="m" appearance="secondary" (click)="enableEditMode()">
+            Editar Usuário
+          </button>
+        }
+      </div>
+
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden">
+
+        <div class="px-8 py-6 border-b border-slate-100 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/50 flex items-center gap-4">
+          <div class="h-16 w-16 rounded-2xl flex items-center justify-center font-heading text-xl font-bold bg-brand-secondary text-brand-primary">
+            {{ getInitials(u.name) }}
+          </div>
+          <div>
+            <h2 class="font-heading text-xl font-bold text-slate-900 dark:text-white">{{ u.name }}</h2>
+            <p class="text-sm text-slate-500">{{ u.email }}</p>
+          </div>
+        </div>
+
+        <div class="p-8">
+
+          <!-- MODO LEITURA -->
+          @if (!isEditing()) {
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+              <!-- Coluna 1 -->
+              <div class="space-y-6">
+                <div>
+                  <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Nome Completo</span>
+                  <p class="text-slate-900 dark:text-slate-200 font-medium">{{ u.name }}</p>
+                </div>
+                <div>
+                  <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Status</span>
+                  <p class="font-medium flex items-center gap-2" [class.text-green-600]="u.active" [class.text-slate-500]="!u.active">
+                    <span class="h-2 w-2 rounded-full" [class.bg-green-500]="u.active" [class.bg-slate-300]="!u.active"></span>
+                    {{ u.active ? 'Ativo' : 'Inativo' }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Coluna 2 -->
+              <div class="space-y-6">
+                <div>
+                  <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Contato</span>
+                  <p class="text-slate-900 dark:text-slate-200 font-medium">{{ u.email }}</p>
+                  <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">{{ u.phoneNumber || 'Telefone não informado' }}</p>
+                </div>
+                <div>
+                  <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Nível de Acesso</span>
+                  <p class="text-slate-900 dark:text-slate-200 font-medium">
+                    <app-role-badge [role]="u.role"></app-role-badge>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Coluna 3: Auditoria -->
+              <div class="space-y-6 lg:border-l lg:border-slate-100 lg:dark:border-slate-800 lg:pl-8">
+                <div>
+                  <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Criado em</span>
+                  <p class="text-slate-900 dark:text-slate-200 font-medium">{{ u.createdAt | date: 'dd/MM/yyyy HH:mm' }}</p>
+                </div>
+                <div>
+                  <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Última Atualização</span>
+                  <p class="text-slate-900 dark:text-slate-200 font-medium">{{ u.updatedAt | date: 'dd/MM/yyyy HH:mm' }}</p>
+                </div>
+              </div>
+
+            </div>
+          }  @else {
+            <form [formGroup]="editForm" (ngSubmit)="saveChanges()" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+              <div class="col-span-1 md:col-span-2">
+                <tui-textfield tuiTextfieldSize="l">
+                  <label tuiLabel>Nome Completo</label>
+                  <input tuiInput type="text" formControlName="name"/>
+                </tui-textfield>
+              </div>
+
+              <div class="col-span-1">
+                <tui-textfield tuiTextfieldSize="l">
+                  <label tuiLabel>E-mail corporativo</label>
+                  <input tuiInput type="email" formControlName="email"/>
+                </tui-textfield>
+              </div>
+
+              <div class="col-span-1">
+                <tui-textfield tuiTextfieldSize="l">
+                  <label tuiLabel>Telefone</label>
+                  <input tuiInputPhone mask="+55 (##) #####-####" formControlName="phoneNumber"/>
+                </tui-textfield>
+              </div>
+
+              <div class="col-span-1 md:col-span-2">
+                <tui-textfield tuiTextfieldSize="l" tuiChevron>
+                  <label tuiLabel>Nível de Acesso</label>
+                  <input
+                    tuiSelect
+                    formControlName="role"
+                  />
+
+                  <tui-data-list-wrapper
+                    *tuiDropdown
+                    [items]="availableRoles()"
+                  />
+                </tui-textfield>
+              </div>
+
+              <!-- Ações -->
+              <div class="col-span-1 md:col-span-2 flex items-center justify-end gap-3 pt-6 mt-4 border-t border-slate-100 dark:border-slate-800">
+                <button tuiButton type="button" appearance="secondary" size="m" (click)="cancelEdit()">
+                  Cancelar
+                </button>
+                <button tuiButton type="submit" appearance="primary" size="m" [disabled]="saving()">
+                  {{ saving() ? 'Salvando...' : 'Salvar Alterações' }}
+                </button>
+              </div>
+            </form>
+          }
+
+        </div>
+      </div>
+
+    }
+  </tui-loader>
+</div>
