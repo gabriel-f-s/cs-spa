@@ -4,7 +4,7 @@ import { AuthResponse, MfaVerifyRequest } from '../../../core/models/auth.model'
 import { ErrorResponse } from '../../../core/models/error.model';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { jwtDecode } from 'jwt-decode';
-import { TuiButton, TuiError, TuiInput, TuiLink, TuiNotificationService } from '@taiga-ui/core';
+import { TuiButton, TuiError, TuiInput, TuiLink, TuiNotificationService, TuiTextfield } from '@taiga-ui/core';
 import { TuiButtonLoading } from '@taiga-ui/kit';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -17,6 +17,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
     ReactiveFormsModule,
     TuiInput,
     TuiButton,
+    TuiTextfield,
     TuiLink,
   ],
   templateUrl: './mfa.html',

@@ -4,14 +4,17 @@ import {
   HttpRequest,
   HttpHandlerFn,
 } from '@angular/common/http';
-import { inject } from '@angular/core';
+import { inject, Injector } from '@angular/core';
 import { catchError, filter, switchMap, take, throwError, BehaviorSubject } from 'rxjs';
 import { AuthService } from '../services/auth/auth.service';
+import { Router } from '@angular/router';
+import { AccessControlService } from '../services/access-control/access-control.service';
 
 let isRefreshing = false;
 const refreshTokenSubject = new BehaviorSubject<string | null>(null);
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const injector = inject(Injector);
   const authService = inject(AuthService);
   const token = authService.getToken();
 
@@ -27,10 +30,17 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
-      if (
-        error.status === 401 && !isAuthRoute
-      ) {
+      if (error.status === 401 && !isAuthRoute) {
         return handle401Error(authReq, next, authService);
+      }
+      if (error.status === 403) {
+        const accessControl = injector.get(AccessControlService);
+        accessControl.notifyAccessDenied();
+
+        const router = injector.get(Router);
+        router.navigate(['/dashboard']);
+
+        return throwError(() => error);
       }
       return throwError(() => error);
     }),

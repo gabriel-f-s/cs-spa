@@ -4,6 +4,7 @@ import { Observable, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import {
   AuthResponse,
+  FirstPasswordChangedRequest,
   LoginRequest,
   MfaVerifyRequest,
   RefreshRequest,
@@ -17,7 +18,10 @@ import { Router } from '@angular/router';
 export class AuthService {
   private readonly API_URL: string = `${environment.apiUrl}/auth`;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {}
 
   public login(credentials: LoginRequest, rememberMe: boolean): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.API_URL}/login`, credentials).pipe(
@@ -30,6 +34,12 @@ export class AuthService {
   }
 
   public logout(): void {
+    const request: RefreshRequest = {
+      refreshToken:
+        localStorage.getItem('refresh_token') || sessionStorage.getItem('refresh_token'),
+    };
+    this.http.post<AuthResponse>(`${this.API_URL}/logout`, request).pipe();
+
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     sessionStorage.clear();
@@ -37,13 +47,24 @@ export class AuthService {
   }
 
   public refreshToken(): Observable<AuthResponse> {
-    const refreshToken: RefreshRequest = {
-      refreshToken: localStorage.getItem('refresh_token') || sessionStorage.getItem('refresh_token'),
-    }
-    return this.http.post<AuthResponse>(`${this.API_URL}/refresh`, { refreshToken }).pipe(
+    const refreshRequest: RefreshRequest = {
+      refreshToken:
+        localStorage.getItem('refresh_token') || sessionStorage.getItem('refresh_token'),
+    };
+    return this.http.post<AuthResponse>(`${this.API_URL}/refresh`, refreshRequest).pipe(
       tap((response) => {
         const isLocal = !!localStorage.getItem('refresh_token');
         this.setSession(response, isLocal);
+      }),
+    );
+  }
+
+  public firstPasswordReset(credentials: FirstPasswordChangedRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.API_URL}/first-password`, credentials).pipe(
+      tap((response) => {
+        if (!response.mfaRequired && response.status === 'SUCCESS') {
+          this.setSession(response, false);
+        }
       }),
     );
   }
@@ -56,19 +77,30 @@ export class AuthService {
     return !!this.getToken();
   }
 
-  public getUserRole(): string | null {
+  public getUserRole(): string {
+    const token = this.getToken();
+    if (!token) throw new Error('Token is required');
+    try {
+      const decoded: any = jwtDecode(token);
+      return decoded.role || decoded.authorities;
+    } catch {
+      throw new Error('Unable to get user role');
+    }
+  }
+
+  public getUserId(): string | null {
     const token = this.getToken();
     if (!token) return null;
     try {
       const decoded: any = jwtDecode(token);
-      return decoded.role || decoded.authorities;
+      return decoded.sub;
     } catch {
       return null;
     }
   }
 
   public verifyMfaAndLogin(request: MfaVerifyRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.API_URL}/mfa/verify`, request)
+    return this.http.post<AuthResponse>(`${this.API_URL}/mfa/verify`, request);
   }
 
   public setSession(authResult: AuthResponse, rememberMe: boolean): void {

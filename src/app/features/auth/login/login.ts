@@ -7,13 +7,13 @@ import {
   TuiLink,
   TuiTextfield,
   TuiCheckbox,
-  TuiInput,
+  TuiInput, TuiIcon,
 } from '@taiga-ui/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { LoginRequest } from '../../../core/models/auth.model';
 import { jwtDecode } from 'jwt-decode';
-import { TuiButtonLoading } from '@taiga-ui/kit';
+import { TuiButtonLoading, TuiPassword } from '@taiga-ui/kit';
 import { TuiNotificationService } from '@taiga-ui/core';
 
 @Component({
@@ -29,6 +29,8 @@ import { TuiNotificationService } from '@taiga-ui/core';
     TuiError,
     TuiTextfield,
     TuiButtonLoading,
+    TuiIcon,
+    TuiPassword,
   ],
   templateUrl: './login.html',
   styleUrl: './login.css',
@@ -71,14 +73,19 @@ export class Login {
 
     this.authService.login(request, rememberMe).subscribe({
       next: (response) => {
-        this.isLoading = false;
-
+        if (response.status === 'REQUIRE_PASSWORD_CHANGE') {
+          this.router.navigate(['/auth/first-password'], {
+            queryParams: { token: response.accessToken },
+          });
+          return;
+        }
         if (response.mfaRequired && response.mfaToken) {
           sessionStorage.setItem('mfa_pending_token', response.mfaToken);
           sessionStorage.setItem('remember_me', String(rememberMe));
           this.router.navigate(['/auth/mfa']);
           return;
         }
+        this.isLoading = false;
 
         const decodedToken: any = jwtDecode(response.accessToken);
         const userRole = decodedToken.role;
@@ -100,7 +107,7 @@ export class Login {
         this.isLoading = false;
         this.alerts
           .open('E-mail ou senha incorretos.', {
-            appearance: 'error',
+            appearance: 'negative',
             label: 'Falha na autenticação',
             autoClose: 5000,
           })

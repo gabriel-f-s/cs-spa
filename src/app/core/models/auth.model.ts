@@ -19,3 +19,9 @@ export interface MfaVerifyRequest {
 export interface RefreshRequest {
   refreshToken: string | null;
 }
+
+export interface FirstPasswordChangedRequest {
+  password: string;
+  confirmPassword: string;
+  tempToken: string;
+}
