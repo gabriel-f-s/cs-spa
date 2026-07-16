@@ -27,8 +27,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ProfileService } from '../../../core/services/profile/profile.service';
-import { AuthService } from '../../../core/services/auth/auth.service';
+import { ProfileService } from '../../../../core/services/profile/profile.service';
+import { AuthService } from '../../../../core/services/auth/auth.service';
 import { DatePipe } from '@angular/common';
 import { QRCodeComponent } from 'angularx-qrcode';
 import {
@@ -36,8 +36,8 @@ import {
   DisableMfaRequest,
   ProfileResponse,
   SecurityProfile,
-} from '../../../core/models/profile.model';
-import { MfaVerifyRequest } from '../../../core/models/auth.model';
+} from '../../../../core/models/profile.model';
+import { MfaVerifyRequest } from '../../../../core/models/auth.model';
 
 @Component({
   selector: 'app-security',
